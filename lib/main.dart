@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/album': (context) => const AlbumPage(),
         '/player': (context) => const PlayerPage(),
-        'playlist': (context) => const PlaylistPage()
+        '/playlist': (context) => const PlaylistPage()
       },
     );
   }

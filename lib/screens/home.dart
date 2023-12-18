@@ -33,9 +33,7 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () => Navigator.pushNamed(context, '/album',
-                              arguments: {
-                                "context": dataAlbums[index].toJson()
-                              }),
+                              arguments: dataAlbums[index].toJson()),
                           child: Cards(
                             imgUrl: dataAlbums[index].images[0]['url'],
                             nameAlbum: dataAlbums[index].name,

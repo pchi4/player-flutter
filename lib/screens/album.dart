@@ -376,8 +376,13 @@ class _AlbumPageState extends State<AlbumPage> {
 
     final AlbumsData = AlbumRepositories.albums;
 
-    // final routes = ModalRoute.of(context)?.settings.arguments;
-    // print(routes);
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    print(arguments['tracks']['items'][0]);
+
+    DateTime getYear = DateTime(arguments['release_date']).year as DateTime;
+
+    print(getYear);
 
     return Scaffold(
       appBar: AppBar(
@@ -403,13 +408,13 @@ class _AlbumPageState extends State<AlbumPage> {
                       child: SizedBox(
                         height: 250,
                         width: 250,
-                        child: Image.network(AlbumsData[0].images[0]['url']),
+                        child: Image.network(arguments['images'][0]['url']),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                       child: Text(
-                        AlbumsData[0].name,
+                        arguments['artists'][0]['name'],
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
                         maxLines: 1,
@@ -424,19 +429,19 @@ class _AlbumPageState extends State<AlbumPage> {
                       children: <Widget>[
                         ClipOval(
                           child: Image.network(
-                            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c31b8f89-a809-446b-8275-a5adab4be586/d85o4zy-ecaafe3e-0d07-4dc4-8ead-0e9a48947e5b.png/v1/fill/w_300,h_300,q_80,strp/naruto_avatar_by_0bruno_d85o4zy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzAwIiwicGF0aCI6IlwvZlwvYzMxYjhmODktYTgwOS00NDZiLTgyNzUtYTVhZGFiNGJlNTg2XC9kODVvNHp5LWVjYWFmZTNlLTBkMDctNGRjNC04ZWFkLTBlOWE0ODk0N2U1Yi5wbmciLCJ3aWR0aCI6Ijw9MzAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.Q_50rAxj4yE1grYL00EVR6zdbtvhoJfq3Ihaw99lK8w',
+                            arguments['artists'][0]['url'],
                             width: 25,
                             height: 25,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 8.0),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            'Yves Tumor',
+                            arguments['artists'][0]['name'],
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
                             maxLines: 1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12.0,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -513,11 +518,11 @@ class _AlbumPageState extends State<AlbumPage> {
                     ),
                     ListView.builder(
                         shrinkWrap: true,
-                        itemCount: tracks.length,
+                        itemCount: arguments['tracks']['items'].length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             subtitle: Text(
-                              tracks[index]["artists"][0]["name"],
+                              arguments['artists'][0]['name'],
                               style: const TextStyle(color: Colors.white54),
                             ),
                             key: ValueKey(index),
@@ -526,7 +531,7 @@ class _AlbumPageState extends State<AlbumPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    tracks[index]["name"],
+                                    arguments['tracks']['items'][index]['name'],
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                   const Icon(
