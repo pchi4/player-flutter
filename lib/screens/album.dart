@@ -14,7 +14,7 @@ class _AlbumPageState extends State<AlbumPage> {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
 
-    print(arguments['tracks']['items'][0]);
+    print(arguments['images']);
 
     return Scaffold(
       appBar: AppBar(
@@ -154,6 +154,14 @@ class _AlbumPageState extends State<AlbumPage> {
                         itemCount: arguments['tracks']['items'].length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              '/player',
+                              arguments: {
+                                arguments['tracks']['items'][index],
+                                arguments['images'],
+                              },
+                            ),
                             subtitle: Text(
                               arguments['artists'][0]['name'],
                               style: const TextStyle(color: Colors.white54),
