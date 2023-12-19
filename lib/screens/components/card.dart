@@ -16,7 +16,7 @@ class Cards extends StatelessWidget {
       padding: const EdgeInsets.only(right: 6.0, left: 6.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(6.0),
             child: SizedBox(
@@ -31,10 +31,26 @@ class Cards extends StatelessWidget {
               nameAlbum,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
-              style: const TextStyle(fontWeight: FontWeight.bold, height: 1.5),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  height: 1.5,
+                  color: Colors.white),
             ),
           ),
-          Text(nameArtist),
+          Row(
+            children: <Widget>[
+              const Text(
+                'Album  ',
+                style: TextStyle(color: Colors.white38),
+              ),
+              Text(
+                nameArtist,
+                style: const TextStyle(
+                  color: Colors.white38,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

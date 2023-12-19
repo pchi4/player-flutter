@@ -12,7 +12,11 @@ class TitleCard extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.start,
       maxLines: 1,
-      style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+      style: const TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          height: 2.5),
     );
   }
 }
