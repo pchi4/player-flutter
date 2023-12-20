@@ -8,90 +8,193 @@ class PlayerPage extends StatefulWidget {
 }
 
 class _PlayerPageState extends State<PlayerPage> {
+  double valueChange = 20;
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
 
     print(arguments);
 
+    // arguments['artists'][0]['name']
+    // arguments['name']
+
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black54,
+        backgroundColor: Colors.black38,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        titleSpacing: 0,
+        toolbarHeight: 0,
         title: const Text(
           '',
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            color: Colors.black54,
-            child: Column(
-              children: <Widget>[
-                const Expanded(
-                  flex: 3,
-                  child: Center(
-                    child: Text('a'),
-                  ),
-                ),
-                Expanded(
-                    child: Column(
+      body: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            SliverFillRemaining(
+              fillOverscroll: true,
+              child: Container(
+                color: Colors.black38,
+                child: ListView(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      children: <Widget>[
-                        Flexible(
-                            child: ListTile(
-                          title: Text(arguments['name']),
-                          subtitle: Text(arguments['artists'][0]['name']),
-                        )),
-                        const Center(
-                          child: Icon(Icons.favorite),
-                        )
-                      ],
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, bottom: 30.0, top: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.expand_more,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 260,
+                                  child: ListTile(
+                                    title: const Center(
+                                        child: Text('TOCANDO DO ALBUM',
+                                            style: TextStyle(
+                                                color: Colors.white))),
+                                    subtitle: Center(
+                                        child: Text(arguments['nameAlbum'],
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Colors.white54))),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.more_vert,
+                                  size: 30,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                          Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6.0),
+                              child: Flexible(
+                                child: Image.network(
+                                  arguments['img'][0]['url'],
+                                  width: width / 1.3,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    const Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Expanded(
+                      flex: 1,
+                      child: Column(
                         children: <Widget>[
-                          Icon(
-                            Icons.shuffle,
-                            size: 40,
-                            color: Colors.white,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            children: <Widget>[
+                              Flexible(
+                                  child: ListTile(
+                                title: Text(arguments['tracks']['name'],
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                                subtitle: Text(
+                                    arguments['tracks']['artists'][0]['name'],
+                                    style:
+                                        const TextStyle(color: Colors.white54)),
+                              )),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
                           ),
-                          Icon(
-                            Icons.skip_previous,
-                            size: 40,
-                            color: Colors.white,
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.all(4.0),
+                              child: Slider(
+                                value: valueChange,
+                                max: 100,
+                                onChanged: (double value) {
+                                  setState(() {
+                                    valueChange = value;
+                                  });
+                                },
+                              ),
+                            ),
                           ),
-                          Icon(
-                            Icons.play_circle,
-                            size: 80,
-                            color: Colors.white,
+                          const Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.shuffle,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                Icon(
+                                  Icons.skip_previous,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                Icon(
+                                  Icons.play_circle,
+                                  size: 80,
+                                  color: Colors.white,
+                                ),
+                                Icon(
+                                  Icons.skip_next,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                Icon(
+                                  Icons.repeat,
+                                  size: 20,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
                           ),
-                          Icon(
-                            Icons.skip_next,
-                            size: 40,
-                            color: Colors.white,
+                          const SizedBox(
+                            height: 150,
                           ),
-                          Icon(
-                            Icons.repeat,
-                            size: 40,
-                            color: Colors.white,
+                          Card(
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c31b8f89-a809-446b-8275-a5adab4be586/d85o4zy-ecaafe3e-0d07-4dc4-8ead-0e9a48947e5b.png/v1/fill/w_300,h_300,q_80,strp/naruto_avatar_by_0bruno_d85o4zy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzAwIiwicGF0aCI6IlwvZlwvYzMxYjhmODktYTgwOS00NDZiLTgyNzUtYTVhZGFiNGJlNTg2XC9kODVvNHp5LWVjYWFmZTNlLTBkMDctNGRjNC04ZWFkLTBlOWE0ODk0N2U1Yi5wbmciLCJ3aWR0aCI6Ijw9MzAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.Q_50rAxj4yE1grYL00EVR6zdbtvhoJfq3Ihaw99lK8w',
+                                  fit: BoxFit.cover,
+                                ),
+                                SizedBox(
+                                  height: 200,
+                                  child: Container(
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
                     ),
                   ],
-                ))
-              ],
+                ),
+              ),
             ),
-          )
-        ],
-      ),
+          ]),
     );
   }
 }

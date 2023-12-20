@@ -19,9 +19,10 @@ class _AlbumPageState extends State<AlbumPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black54,
-        title: const Text(
-          '',
-          style: TextStyle(fontWeight: FontWeight.w500),
+        title: Text(
+          arguments['name'],
+          style:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
       body: Container(
@@ -158,8 +159,9 @@ class _AlbumPageState extends State<AlbumPage> {
                               context,
                               '/player',
                               arguments: {
-                                arguments['tracks']['items'][index],
-                                arguments['images'],
+                                'tracks': arguments['tracks']['items'][index],
+                                'img': arguments['images'],
+                                'nameAlbum': arguments['name'],
                               },
                             ),
                             subtitle: Text(
