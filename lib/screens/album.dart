@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:player_flutter/repositories/album_repositories.dart';
 
 class AlbumPage extends StatefulWidget {
   const AlbumPage({super.key});
@@ -13,8 +12,6 @@ class _AlbumPageState extends State<AlbumPage> {
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-
-    print(arguments['images']);
 
     return Scaffold(
       appBar: AppBar(
