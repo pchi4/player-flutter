@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           'Bem vindo',
-          style: TextStyle(fontWeight: FontWeight.w500),
+          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
       body: CustomScrollView(
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           SliverFillRemaining(
             fillOverscroll: true,
             child: Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: const EdgeInsets.only(top: 6.0, bottom: 6.0, left: 10.0),
               child: ListView(
                 children: <Widget>[
                   const TitleCard(title: 'Tocados recentemente'),
