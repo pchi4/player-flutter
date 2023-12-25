@@ -32,15 +32,16 @@ class _PlayerPageState extends State<PlayerPage> {
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            child: Container(
-              color: Colors.black38,
+      body: Column(
+        children: [
+          Flexible(
+            flex: 1,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
                 children: <Widget>[
-                  Expanded(
-                    flex: 2,
+                  SizedBox(
+                    height: 500,
                     child: Column(
                       children: [
                         Padding(
@@ -80,18 +81,16 @@ class _PlayerPageState extends State<PlayerPage> {
                         Center(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(6.0),
-                            child: Flexible(
-                              child: Image.network(
-                                arguments['img'][0]['url'],
-                                width: width / 1.3,
-                              ),
+                            child: Image.network(
+                              arguments['img'][0]['url'],
+                              width: width / 1.3,
                             ),
                           ),
                         )
                       ],
                     ),
                   ),
-                  Expanded(
+                  SizedBox(
                     child: Column(
                       children: <Widget>[
                         Row(
@@ -162,7 +161,7 @@ class _PlayerPageState extends State<PlayerPage> {
                           ),
                         ),
                         const SizedBox(
-                          height: 150,
+                          height: 80,
                         ),
                         Card(
                           child: Column(
@@ -182,7 +181,7 @@ class _PlayerPageState extends State<PlayerPage> {
                         )
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
