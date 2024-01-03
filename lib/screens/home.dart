@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:player_flutter/repositories/album_repositories.dart';
 import 'package:player_flutter/screens/components/card.dart';
 import 'package:player_flutter/screens/components/title_card.dart';
@@ -10,10 +13,33 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+var albums;
+
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final dataAlbums = AlbumRepositories.albums;
+
+    Future<void> fetchData() async {
+      final url = Uri.parse('http://127.0.0.1:3000/album');
+
+      final response = await http.get(url);
+
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        var data = await jsonDecode(response.body);
+        print(data['items'].length);
+        setState(() {
+          albums = data['items'];
+        });
+        return data;
+      } else {
+        print('Hata: ${response.statusCode}');
+      }
+    }
+
+    print(albums);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,38 +58,55 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
         ),
       ),
-      body: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        slivers: [
-          SliverFillRemaining(
-            fillOverscroll: true,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 6.0, bottom: 6.0, left: 10.0),
-              child: ListView(
-                children: <Widget>[
-                  const TitleCard(title: 'Tocados recentemente'),
-                  SizedBox(
-                    height: 300.0,
-                    child: ListView.builder(
-                        itemCount: dataAlbums.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, '/album',
-                                arguments: dataAlbums[index].toJson()),
-                            child: Cards(
-                              imgUrl: dataAlbums[index].images[0]['url'],
-                              nameAlbum: dataAlbums[index].name,
-                              nameArtist: dataAlbums[index].artists[0]['name'],
-                            ),
-                          );
-                        }),
+      body: FutureBuilder(
+        future: fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print(snapshot.hasData);
+            return CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                SliverFillRemaining(
+                  fillOverscroll: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 6.0, bottom: 6.0, left: 10.0),
+                    child: ListView(
+                      children: <Widget>[
+                        const TitleCard(title: 'Tocados recentemente'),
+                        SizedBox(
+                          height: 300.0,
+                          child: ListView.builder(
+                              itemCount: dataAlbums.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, '/album',
+                                      arguments: dataAlbums[index].toJson()),
+                                  child: Cards(
+                                    imgUrl: dataAlbums[index].images[0]['url'],
+                                    nameAlbum: dataAlbums[index].name,
+                                    nameArtist: dataAlbums[index].artists[0]
+                                        ['name'],
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-        ],
+                ),
+              ],
+            );
+          } else if (snapshot.error != null) {
+            return const Center(child: Text('Deu error!'));
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }

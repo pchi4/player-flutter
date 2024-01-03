@@ -41,7 +41,7 @@ class _PlayerPageState extends State<PlayerPage> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: 500,
+                    height: height / 1.5,
                     child: Column(
                       children: [
                         Padding(
@@ -129,54 +129,28 @@ class _PlayerPageState extends State<PlayerPage> {
                           ),
                         ),
                         const Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Icon(
-                                Icons.shuffle,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.skip_previous,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.play_circle,
-                                size: 80,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.skip_next,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                Icons.repeat,
-                                size: 20,
-                                color: Colors.white,
-                              )
-                            ],
-                          ),
+                          child: IconsMenu(),
                         ),
                         const SizedBox(
                           height: 80,
                         ),
-                        Card(
-                          child: Column(
-                            children: [
-                              Image.network(
-                                'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c31b8f89-a809-446b-8275-a5adab4be586/d85o4zy-ecaafe3e-0d07-4dc4-8ead-0e9a48947e5b.png/v1/fill/w_300,h_300,q_80,strp/naruto_avatar_by_0bruno_d85o4zy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzAwIiwicGF0aCI6IlwvZlwvYzMxYjhmODktYTgwOS00NDZiLTgyNzUtYTVhZGFiNGJlNTg2XC9kODVvNHp5LWVjYWFmZTNlLTBkMDctNGRjNC04ZWFkLTBlOWE0ODk0N2U1Yi5wbmciLCJ3aWR0aCI6Ijw9MzAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.Q_50rAxj4yE1grYL00EVR6zdbtvhoJfq3Ihaw99lK8w',
-                                fit: BoxFit.cover,
-                              ),
-                              SizedBox(
-                                height: 200,
-                                child: Container(
-                                  color: Colors.purple,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c31b8f89-a809-446b-8275-a5adab4be586/d85o4zy-ecaafe3e-0d07-4dc4-8ead-0e9a48947e5b.png/v1/fill/w_300,h_300,q_80,strp/naruto_avatar_by_0bruno_d85o4zy-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzAwIiwicGF0aCI6IlwvZlwvYzMxYjhmODktYTgwOS00NDZiLTgyNzUtYTVhZGFiNGJlNTg2XC9kODVvNHp5LWVjYWFmZTNlLTBkMDctNGRjNC04ZWFkLTBlOWE0ODk0N2U1Yi5wbmciLCJ3aWR0aCI6Ijw9MzAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.Q_50rAxj4yE1grYL00EVR6zdbtvhoJfq3Ihaw99lK8w',
+                                  fit: BoxFit.cover,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  height: 200,
+                                  child: Container(
+                                    color: Colors.purple,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -188,6 +162,44 @@ class _PlayerPageState extends State<PlayerPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class IconsMenu extends StatelessWidget {
+  const IconsMenu({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Icon(
+          Icons.shuffle,
+          size: 20,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.skip_previous,
+          size: 40,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.play_circle,
+          size: 80,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.skip_next,
+          size: 40,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.repeat,
+          size: 20,
+          color: Colors.white,
+        ),
+      ],
     );
   }
 }
